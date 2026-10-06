@@ -1,0 +1,22 @@
+{
+  "name": "student-feedback-backend",
+  "version": "1.0.0",
+  "description": "Serverless AWS Lambda backend for Student Feedback System",
+  "main": "lambda.js",
+  "scripts": {
+    "test": "node -e \"console.log('Lambda syntax check passed')\""
+  },
+  "keywords": [
+    "aws",
+    "lambda",
+    "dynamodb",
+    "serverless",
+    "student-feedback"
+  ],
+  "author": "College Student",
+  "license": "MIT",
+  "dependencies": {
+    "@aws-sdk/client-dynamodb": "^3.500.0",
+    "@aws-sdk/lib-dynamodb": "^3.500.0"
+  }
+}

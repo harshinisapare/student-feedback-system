@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Student Feedback System | College Portal</title>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- Header / Navigation Bar -->
+  <header class="header">
+    <div class="header-container">
+      <div class="brand">
+        <div class="brand-logo">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
+            <path d="M6 12v5c3 3 9 3 12 0v-5"/>
+          </svg>
+        </div>
+        <div>
+          <h1 class="brand-title">Student Feedback System</h1>
+          <p class="brand-subtitle">Course & Faculty Evaluation Portal</p>
+        </div>
+      </div>
+      <div class="cloud-badge">
+        <span class="badge-dot"></span>
+        <span>AWS Serverless Architecture</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content Area -->
+  <main class="main-content">
+    <div class="card">
+      <div class="card-header">
+        <h2>Submit Course Feedback</h2>
+        <p>Your honest feedback helps improve academic quality and faculty mentorship.</p>
+      </div>
+
+      <!-- Live Notification Banners -->
+      <div id="alert-box" class="alert-box hidden" role="alert">
+        <div class="alert-icon" id="alert-icon"></div>
+        <div class="alert-content">
+          <h4 id="alert-title"></h4>
+          <p id="alert-message"></p>
+          <div id="alert-extra" class="alert-extra hidden"></div>
+        </div>
+        <button type="button" class="alert-close" id="alert-close-btn" aria-label="Dismiss message">&times;</button>
+      </div>
+
+      <!-- Feedback Form -->
+      <form id="feedback-form" novalidate>
+        <!-- Two Column Grid for Student Info -->
+        <div class="form-row">
+          <div class="form-group">
+            <label for="studentName">
+              Student Full Name <span class="required">*</span>
+            </label>
+            <div class="input-wrapper">
+              <svg class="input-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                <circle cx="12" cy="7" r="4"></circle>
+              </svg>
+              <input
+                type="text"
+                id="studentName"
+                name="studentName"
+                placeholder="e.g. John Doe"
+                required
+                autocomplete="name"
+              />
+            </div>
+            <span class="error-text" id="studentNameError">Please enter your name.</span>
+          </div>
+
+          <div class="form-group">
+            <label for="usn">
+              USN / Roll Number <span class="required">*</span>
+            </label>
+            <div class="input-wrapper">
+              <svg class="input-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="2" y="5" width="20" height="14" rx="2"></rect>
+                <line x1="2" y1="10" x2="22" y2="10"></line>
+              </svg>
+              <input
+                type="text"
+                id="usn"
+                name="usn"
+                placeholder="e.g. 1MS21CS045"
+                required
+                autocomplete="off"
+                style="text-transform: uppercase;"
+              />
+            </div>
+            <span class="error-text" id="usnError">Please enter a valid USN.</span>
+          </div>
+        </div>
+
+        <!-- Two Column Grid for Course & Faculty Info -->
+        <div class="form-row">
+          <div class="form-group">
+            <label for="subject">
+              Subject / Course <span class="required">*</span>
+            </label>
+            <div class="input-wrapper">
+              <svg class="input-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+                <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+              </svg>
+              <select id="subject" name="subject" required>
+                <option value="" disabled selected>Select a subject</option>
+                <option value="Cloud Computing & DevOps">Cloud Computing & DevOps</option>
+                <option value="Database Management Systems">Database Management Systems</option>
+                <option value="Computer Networks">Computer Networks</option>
+                <option value="Operating Systems">Operating Systems</option>
+                <option value="Data Structures & Algorithms">Data Structures & Algorithms</option>
+                <option value="Machine Learning">Machine Learning</option>
+                <option value="Web Technologies">Web Technologies</option>
+                <option value="Software Engineering">Software Engineering</option>
+                <option value="Other">Other (Custom Subject)</option>
+              </select>
+            </div>
+            <span class="error-text" id="subjectError">Please select a subject.</span>
+          </div>
+
+          <div class="form-group" id="customSubjectGroup" style="display: none;">
+            <label for="customSubject">
+              Specify Subject Name <span class="required">*</span>
+            </label>
+            <div class="input-wrapper">
+              <svg class="input-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+              </svg>
+              <input
+                type="text"
+                id="customSubject"
+                name="customSubject"
+                placeholder="Enter subject name"
+              />
+            </div>
+            <span class="error-text" id="customSubjectError">Please specify the subject.</span>
+          </div>
+
+          <div class="form-group" id="teacherGroup">
+            <label for="teacherName">
+              Teacher / Faculty Name <span class="required">*</span>
+            </label>
+            <div class="input-wrapper">
+              <svg class="input-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="7" r="4"></circle>
+                <path d="M5.5 21a8.38 8.38 0 0 1 13 0"></path>
+              </svg>
+              <input
+                type="text"
+                id="teacherName"
+                name="teacherName"
+                placeholder="e.g. Dr. Rajesh Sharma"
+                required
+              />
+            </div>
+            <span class="error-text" id="teacherNameError">Please enter the faculty name.</span>
+          </div>
+        </div>
+
+        <!-- Rating Section -->
+        <div class="form-group">
+          <label class="rating-label">
+            Course & Faculty Rating (1 to 5) <span class="required">*</span>
+            <span class="rating-text" id="ratingDesc">Select your score</span>
+          </label>
+          <div class="rating-container" id="star-rating">
+            <button type="button" class="star-btn" data-value="1" title="1 - Poor" aria-label="1 star">
+              <svg class="star-icon" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+            </button>
+            <button type="button" class="star-btn" data-value="2" title="2 - Fair" aria-label="2 stars">
+              <svg class="star-icon" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+            </button>
+            <button type="button" class="star-btn" data-value="3" title="3 - Good" aria-label="3 stars">
+              <svg class="star-icon" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+            </button>
+            <button type="button" class="star-btn" data-value="4" title="4 - Very Good" aria-label="4 stars">
+              <svg class="star-icon" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+            </button>
+            <button type="button" class="star-btn" data-value="5" title="5 - Excellent" aria-label="5 stars">
+              <svg class="star-icon" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+            </button>
+          </div>
+          <input type="hidden" id="rating" name="rating" value="0" />
+          <span class="error-text" id="ratingError">Please select a rating from 1 to 5.</span>
+        </div>
+
+        <!-- Feedback Textarea -->
+        <div class="form-group">
+          <div class="textarea-header">
+            <label for="feedback">
+              Detailed Feedback <span class="required">*</span>
+            </label>
+            <span class="char-counter" id="charCounter">0 / 10 min chars</span>
+          </div>
+          <textarea
+            id="feedback"
+            name="feedback"
+            rows="4"
+            placeholder="Share constructive feedback regarding teaching style, course pacing, lab support, or syllabus coverage..."
+            required
+          ></textarea>
+          <span class="error-text" id="feedbackError">Feedback must be at least 10 characters long.</span>
+        </div>
+
+        <!-- Form Actions -->
+        <div class="form-actions">
+          <button type="reset" class="btn btn-secondary" id="reset-btn">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path>
+              <path d="M3 3v5h5"></path>
+            </svg>
+            Clear / Reset
+          </button>
+          <button type="submit" class="btn btn-primary" id="submit-btn">
+            <span class="spinner hidden" id="submit-spinner"></span>
+            <span class="btn-text" id="submit-text">Submit Feedback</span>
+            <svg class="btn-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="22" y1="2" x2="11" y2="13"></line>
+              <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+            </svg>
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Project Technology Info Card -->
+    <div class="architecture-card">
+      <h3>Serverless Cloud Pipeline</h3>
+      <div class="tech-pipeline">
+        <div class="tech-step">
+          <div class="step-num">1</div>
+          <div class="step-icon">🌐</div>
+          <strong>Frontend (S3)</strong>
+          <p>HTML5, CSS3, Vanilla JS</p>
+        </div>
+        <div class="step-arrow">&rarr;</div>
+        <div class="tech-step">
+          <div class="step-num">2</div>
+          <div class="step-icon">⚡</div>
+          <strong>API Gateway</strong>
+          <p>POST /feedback</p>
+        </div>
+        <div class="step-arrow">&rarr;</div>
+        <div class="tech-step">
+          <div class="step-num">3</div>
+          <div class="step-icon">λ</div>
+          <strong>AWS Lambda</strong>
+          <p>Node.js Backend Handler</p>
+        </div>
+        <div class="step-arrow">&rarr;</div>
+        <div class="tech-step">
+          <div class="step-num">4</div>
+          <div class="step-icon">🗄️</div>
+          <strong>DynamoDB</strong>
+          <p>Table: StudentFeedback</p>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <p>College Mini Project &bull; <strong>Student Feedback System</strong> &bull; Built with AWS Serverless</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
